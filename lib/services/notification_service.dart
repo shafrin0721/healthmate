@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 
 class NotificationService {
-  static void showNotification(BuildContext context, String message, {Color? color}) {
+  static void showNotification(BuildContext context, String message,
+      {Color? color}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -25,4 +26,3 @@ class NotificationService {
     showNotification(context, message, color: AppColors.blue);
   }
 }
-

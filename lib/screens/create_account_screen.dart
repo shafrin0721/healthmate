@@ -112,7 +112,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       hintText: 'Create a password',
-                      hintStyle: const TextStyle(color: AppColors.textSecondary),
+                      hintStyle:
+                          const TextStyle(color: AppColors.textSecondary),
                       filled: true,
                       fillColor: AppColors.white,
                       border: OutlineInputBorder(
@@ -312,7 +313,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       padding: const EdgeInsets.only(left: 4, bottom: 4),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.circle,
             size: 6,
             color: AppColors.textSecondary,
@@ -330,4 +331,3 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 }
-

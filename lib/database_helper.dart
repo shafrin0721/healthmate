@@ -78,7 +78,8 @@ class HealthDatabase {
 
   Future<HealthRecord?> getRecordById(int id) async {
     final db = await database;
-    final result = await db.query('health_records', where: 'id = ?', whereArgs: [id]);
+    final result =
+        await db.query('health_records', where: 'id = ?', whereArgs: [id]);
 
     if (result.isEmpty) return null;
     return HealthRecord.fromMap(result.first);

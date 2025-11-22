@@ -35,7 +35,9 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
   }
 
   void _handleSearch() {
-    context.read<HealthRecordsProvider>().updateSearchQuery(_searchController.text);
+    context
+        .read<HealthRecordsProvider>()
+        .updateSearchQuery(_searchController.text);
   }
 
   @override
@@ -46,14 +48,14 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
+            const DrawerHeader(
+              decoration: BoxDecoration(
                 color: AppColors.teal,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
+                children: [
                   Text(
                     'HealthMate',
                     style: TextStyle(
@@ -80,7 +82,8 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
                 Navigator.pop(context);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const DashboardScreen()),
                 );
               },
             ),
@@ -98,7 +101,8 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
                 Navigator.pop(context);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()),
                 );
               },
             ),
@@ -109,7 +113,8 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen()),
                 );
               },
             ),
@@ -140,7 +145,8 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
               if (value == 'settings') {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen()),
                 );
               } else if (value == 'export') {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -203,7 +209,8 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
                   hintText: 'Search by Date',
                   hintStyle: TextStyle(color: AppColors.textSecondary),
                   border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search, color: AppColors.textSecondary),
+                  prefixIcon:
+                      Icon(Icons.search, color: AppColors.textSecondary),
                 ),
               ),
             ),
@@ -305,68 +312,71 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
           ],
         ),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                record.formattedDate,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit, color: AppColors.green, size: 20),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddRecordScreen(record: record),
-                        ),
-                      );
-                    },
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  record.formattedDate,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.delete, color: AppColors.red, size: 20),
-                    onPressed: () => _confirmDelete(context, record.id),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.edit,
+                          color: AppColors.green, size: 20),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                AddRecordScreen(record: record),
+                          ),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete,
+                          color: AppColors.red, size: 20),
+                      onPressed: () => _confirmDelete(context, record.id),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildMetricItem(
+                    icon: Icons.directions_walk,
+                    iconColor: AppColors.green,
+                    value: '${record.steps}',
                   ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _buildMetricItem(
-                  icon: Icons.directions_walk,
-                  iconColor: AppColors.green,
-                  value: '${record.steps}',
                 ),
-              ),
-              Expanded(
-                child: _buildMetricItem(
-                  icon: Icons.local_fire_department,
-                  iconColor: AppColors.red,
-                  value: '${record.calories}',
+                Expanded(
+                  child: _buildMetricItem(
+                    icon: Icons.local_fire_department,
+                    iconColor: AppColors.red,
+                    value: '${record.calories}',
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _buildMetricItem(
-                  icon: Icons.water_drop,
-                  iconColor: AppColors.blue,
-                  value: '${record.water} ml',
+                Expanded(
+                  child: _buildMetricItem(
+                    icon: Icons.water_drop,
+                    iconColor: AppColors.blue,
+                    value: '${record.water} ml',
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -397,7 +407,8 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Clear All Records'),
-        content: const Text('Are you sure you want to delete all health records? This action cannot be undone.'),
+        content: const Text(
+            'Are you sure you want to delete all health records? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -434,7 +445,9 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
           ),
           TextButton(
             onPressed: () async {
-              await context.read<HealthRecordsProvider>().deleteRecord(recordId);
+              await context
+                  .read<HealthRecordsProvider>()
+                  .deleteRecord(recordId);
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -449,4 +462,3 @@ class _HealthRecordsScreenState extends State<HealthRecordsScreen> {
     );
   }
 }
-

@@ -33,7 +33,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: AppColors.textPrimary),
+            icon: const Icon(Icons.notifications_outlined,
+                color: AppColors.textPrimary),
             onPressed: () {
               _showNotifications(context);
             },
@@ -44,16 +45,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()),
                 ).then((_) {
                   // Refresh dashboard when returning from profile
                   setState(() {});
                 });
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 radius: 18,
                 backgroundColor: AppColors.grayLight,
-                child: const Icon(Icons.person, color: AppColors.textSecondary),
+                child: Icon(Icons.person, color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -205,7 +207,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           } else if (index == 1) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HealthRecordsScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const HealthRecordsScreen()),
             );
           } else if (index == 2) {
             Navigator.push(
@@ -322,7 +325,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildWeeklyChart() {
     final weekData = [6000, 6500, 7000, 8000, 7500, 5000, 6000];
-    final maxValue = 8000;
+    const maxValue = 8000;
 
     return Container(
       height: 200,
@@ -340,7 +343,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       child: LineChart(
         LineChartData(
-          gridData: FlGridData(show: true),
+          gridData: const FlGridData(show: true),
           titlesData: FlTitlesData(
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
@@ -362,7 +365,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 showTitles: true,
                 reservedSize: 30,
                 getTitlesWidget: (value, meta) {
-                  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                  const days = [
+                    'Mon',
+                    'Tue',
+                    'Wed',
+                    'Thu',
+                    'Fri',
+                    'Sat',
+                    'Sun'
+                  ];
                   if (value.toInt() >= 0 && value.toInt() < days.length) {
                     return Text(
                       days[value.toInt()],
@@ -542,4 +553,3 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 }
-
