@@ -49,7 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _darkMode = value;
                   });
                 },
-                activeColor: AppColors.purple,
+                activeThumbColor: AppColors.purple,
               ),
             ),
             const Divider(height: 1),
@@ -121,9 +121,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.logout, color: AppColors.red),
                       SizedBox(width: 8),
                       Text(
@@ -214,4 +214,3 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
-

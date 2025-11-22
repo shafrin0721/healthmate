@@ -1,71 +1,89 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-class AuthProvider {
+class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  Future<UserCredential> signInWithGoogle() async {
+  User? get currentUser => _auth.currentUser;
+
+  Future<User?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        throw Exception('Google Sign In failed');
-      }
+      final googleSignIn = GoogleSignIn(scopes: ['email']);
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return null;
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
+      final googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      return await _auth.signInWithCredential(credential);
+      final userCredential = await _auth.signInWithCredential(credential);
+      notifyListeners();
+      return userCredential.user;
     } catch (e) {
-      throw Exception('Google Sign In failed: $e');
+      debugPrint('Google Sign-In Error: $e');
+      return null;
     }
   }
 
-  Future<UserCredential> signInWithApple() async {
+  Future<User?> signInWithApple() async {
     try {
+      if (!Platform.isIOS && !Platform.isMacOS) {
+        throw Exception("Apple Sign-In only supported on iOS/MacOS");
+      }
+
       final appleCredential = await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
+          AppleIDAuthorizationScopes.fullName
         ],
       );
 
-      final OAuthCredential credential = OAuthProvider('apple.com').credential(
+      final credential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         accessToken: appleCredential.authorizationCode,
       );
 
-      return await _auth.signInWithCredential(credential);
+      final userCredential = await _auth.signInWithCredential(credential);
+      notifyListeners();
+      return userCredential.user;
     } catch (e) {
-      throw Exception('Apple Sign In failed: $e');
+      debugPrint('Apple Sign-In Error: $e');
+      return null;
     }
   }
 
-  Future<UserCredential> signInWithFacebook() async {
+  Future<User?> signInWithFacebook() async {
     try {
-      final LoginResult result = await FacebookAuth.instance.login();
+      final result = await FacebookAuth.instance.login(permissions: ['email']);
+      if (result.status != LoginStatus.success) return null;
 
-      if (result.status == LoginStatus.success) {
-        final OAuthCredential credential = FacebookAuthProvider.credential(
-          result.accessToken!.token,
-        );
+      final accessToken = result.accessToken;
+      if (accessToken == null) return null;
 
-        return await _auth.signInWithCredential(credential);
-      } else {
-        throw Exception('Facebook Sign In failed');
-      }
+      final credential = FacebookAuthProvider.credential(accessToken.token);
+      final userCredential = await _auth.signInWithCredential(credential);
+      notifyListeners();
+      return userCredential.user;
     } catch (e) {
-      throw Exception('Facebook Sign In failed: $e');
+      debugPrint('Facebook Sign-In Error: $e');
+      return null;
     }
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
-    await _googleSignIn.signOut();
+    try {
+      await _auth.signOut();
+      await GoogleSignIn().signOut();
+      await FacebookAuth.instance.logOut();
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Sign Out Error: $e');
+    }
   }
 }

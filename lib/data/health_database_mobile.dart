@@ -32,7 +32,8 @@ class HealthDatabase extends HealthDatabaseBase {
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
-          await db.execute('ALTER TABLE health_records RENAME TO health_records_old');
+          await db.execute(
+              'ALTER TABLE health_records RENAME TO health_records_old');
           await db.execute('''
             CREATE TABLE health_records (
               id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -139,7 +140,8 @@ class HealthDatabase extends HealthDatabaseBase {
   @override
   Future<Map<String, int>> summaryForDate(DateTime date) async {
     final db = await database;
-    final dayStart = DateTime(date.year, date.month, date.day).toIso8601String();
+    final dayStart =
+        DateTime(date.year, date.month, date.day).toIso8601String();
     final result = await db.rawQuery(
       '''
       SELECT 
@@ -192,4 +194,3 @@ class HealthDatabase extends HealthDatabaseBase {
     }
   }
 }
-

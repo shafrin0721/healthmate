@@ -12,4 +12,3 @@ abstract class HealthDatabaseBase {
   Future<Map<String, int>> summaryForDate(DateTime date);
   Future<void> seedDummyData();
 }
-

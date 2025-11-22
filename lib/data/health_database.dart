@@ -86,7 +86,8 @@ class HealthDatabase {
 
   Future<HealthRecord?> getRecordById(int id) async {
     final db = await instance.database;
-    final result = await db.query('health_records', where: 'id = ?', whereArgs: [id]);
+    final result =
+        await db.query('health_records', where: 'id = ?', whereArgs: [id]);
     if (result.isNotEmpty) {
       return HealthRecord.fromMap(result.first);
     }
@@ -95,7 +96,8 @@ class HealthDatabase {
 
   Future<Map<String, int>> summaryForDate(DateTime date) async {
     final db = await instance.database;
-    final todayString = DateTime(date.year, date.month, date.day).toIso8601String();
+    final todayString =
+        DateTime(date.year, date.month, date.day).toIso8601String();
 
     final result = await db.rawQuery('''
       SELECT 
@@ -126,7 +128,8 @@ class HealthDatabase {
     });
 
     await db.insert('health_records', {
-      'date': DateTime.now().subtract(Duration(days: 1)).toIso8601String(),
+      'date':
+          DateTime.now().subtract(const Duration(days: 1)).toIso8601String(),
       'steps': 7000,
       'calories': 1400,
       'water': 1800

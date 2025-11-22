@@ -71,9 +71,15 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
     final record = HealthRecord(
       id: widget.record?.id,
       date: _selectedDate,
-      steps: _stepsController.text.isEmpty ? 0 : int.tryParse(_stepsController.text) ?? 0,
-      calories: _caloriesController.text.isEmpty ? 0 : int.tryParse(_caloriesController.text) ?? 0,
-      water: _waterController.text.isEmpty ? 0 : int.tryParse(_waterController.text) ?? 0,
+      steps: _stepsController.text.isEmpty
+          ? 0
+          : int.tryParse(_stepsController.text) ?? 0,
+      calories: _caloriesController.text.isEmpty
+          ? 0
+          : int.tryParse(_caloriesController.text) ?? 0,
+      water: _waterController.text.isEmpty
+          ? 0
+          : int.tryParse(_waterController.text) ?? 0,
     );
 
     // Check if at least one field has data
@@ -101,7 +107,9 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
         setState(() => _isSaving = false);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(widget.record == null ? 'Record saved successfully!' : 'Record updated successfully!'),
+            content: Text(widget.record == null
+                ? 'Record saved successfully!'
+                : 'Record updated successfully!'),
             backgroundColor: AppColors.green,
           ),
         );
@@ -376,4 +384,3 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
     );
   }
 }
-

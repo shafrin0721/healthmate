@@ -24,7 +24,9 @@ class HealthDatabase extends HealthDatabaseBase {
     if (idString != null) {
       _nextId = int.parse(idString);
     }
-    return jsonList.map((json) => HealthRecord.fromMap(json as Map<String, dynamic>)).toList();
+    return jsonList
+        .map((json) => HealthRecord.fromMap(json as Map<String, dynamic>))
+        .toList();
   }
 
   Future<void> _saveAllRecords(List<HealthRecord> records) async {
@@ -47,14 +49,14 @@ class HealthDatabase extends HealthDatabaseBase {
   Future<List<HealthRecord>> fetchRecords({String? dateFilter}) async {
     var records = await _getAllRecords();
     records.sort((a, b) => b.date.compareTo(a.date));
-    
+
     if (dateFilter != null && dateFilter.isNotEmpty) {
       final filter = dateFilter.toLowerCase();
       records = records.where((record) {
         return record.formattedDate.toLowerCase().contains(filter);
       }).toList();
     }
-    
+
     return records;
   }
 
@@ -101,10 +103,11 @@ class HealthDatabase extends HealthDatabaseBase {
     final records = await _getAllRecords();
     final dayStart = DateTime(date.year, date.month, date.day);
     final dayEnd = dayStart.add(const Duration(days: 1));
-    
+
     int total = 0;
     for (final record in records) {
-      if (record.date.isAfter(dayStart.subtract(const Duration(milliseconds: 1))) &&
+      if (record.date
+              .isAfter(dayStart.subtract(const Duration(milliseconds: 1))) &&
           record.date.isBefore(dayEnd)) {
         total += record.water;
       }
@@ -117,20 +120,21 @@ class HealthDatabase extends HealthDatabaseBase {
     final records = await _getAllRecords();
     final dayStart = DateTime(date.year, date.month, date.day);
     final dayEnd = dayStart.add(const Duration(days: 1));
-    
+
     int steps = 0;
     int calories = 0;
     int water = 0;
-    
+
     for (final record in records) {
-      if (record.date.isAfter(dayStart.subtract(const Duration(milliseconds: 1))) &&
+      if (record.date
+              .isAfter(dayStart.subtract(const Duration(milliseconds: 1))) &&
           record.date.isBefore(dayEnd)) {
         steps += record.steps;
         calories += record.calories;
         water += record.water;
       }
     }
-    
+
     return {
       'steps': steps,
       'calories': calories,
@@ -157,4 +161,3 @@ class HealthDatabase extends HealthDatabaseBase {
     await _saveAllRecords(samples);
   }
 }
-

@@ -83,4 +83,3 @@ class HealthRecordsProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-

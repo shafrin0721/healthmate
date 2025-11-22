@@ -32,7 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             } else {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const DashboardScreen()),
               );
             }
           },
@@ -52,7 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (value == 'settings') {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen()),
                 );
               } else if (value == 'edit') {
                 _showEditProfileDialog(context);
@@ -149,13 +151,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 32),
             // My Stats Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
                   Icon(Icons.show_chart, color: AppColors.teal, size: 20),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: 8),
+                  Text(
                     'My Stats',
                     style: TextStyle(
                       fontSize: 20,
@@ -222,9 +224,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.edit, color: AppColors.white),
                           SizedBox(width: 8),
                           Text(
@@ -253,9 +255,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.logout, color: AppColors.red),
                           SizedBox(width: 8),
                           Text(
@@ -298,7 +300,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Privacy & Security settings coming soon!'),
+                          content:
+                              Text('Privacy & Security settings coming soon!'),
                         ),
                       );
                     },
@@ -337,7 +340,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           } else if (index == 1) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HealthRecordsScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const HealthRecordsScreen()),
             );
           } else if (index == 2) {
             Navigator.push(
@@ -493,7 +497,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _showEditProfileDialog(BuildContext context) {
     final nameController = TextEditingController(text: 'Sarah Johnson');
-    final emailController = TextEditingController(text: 'sarah.johnson@email.com');
+    final emailController =
+        TextEditingController(text: 'sarah.johnson@email.com');
 
     showDialog(
       context: context,
@@ -568,4 +573,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
